@@ -5,11 +5,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         tcl \
         tk \
         curl \
+        git \
         ca-certificates \
         software-properties-common \
         python-software-properties \
         libvirt-dev \
         libxml2-dev \
+        libffi-dev  \
+        libssl-dev  \
+        python-dev \
+        pkg-config \
         debhelper \
         && rm -rf /var/lib/apt/lists/*
 
@@ -28,3 +33,4 @@ RUN pip install --no-cache-dir virtualenv
 RUN add-apt-repository ppa:spotify-jyrki/dh-virtualenv &&\
     apt-get -q update &&\
     apt-get -q install -y dh-virtualenv
+RUN pip install jinja2
