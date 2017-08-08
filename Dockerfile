@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         software-properties-common \
         python-software-properties \
         libvirt-dev \
+        libxslt-dev \
         libxml2-dev \
         libffi-dev  \
         libssl-dev  \
