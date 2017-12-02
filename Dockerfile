@@ -1,7 +1,6 @@
 FROM ubuntu:trusty
 
 # apt dependencies (including python and dh-virtualenv)
-# TODO:: do we really need apt-transport-https?        apt-transport-https \
 RUN apt-get update && apt-get install -y --no-install-recommends \
         tcl \
         tk \
@@ -18,10 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libssl-dev  \
         python-dev \
         pkg-config \
-        debhelper && \
-        add-apt-repository ppa:spotify-jyrki/dh-virtualenv && \
-        apt-get -q update &&\
-        apt-get -q install -y dh-virtualenv \
+        debhelper \
         python && \
         rm -rf /var/lib/apt/lists/*
 
@@ -33,3 +29,7 @@ RUN curl -O https://bootstrap.pypa.io/get-pip.py;\
 RUN pip install --no-cache-dir \
     virtualenv \
     jinja2
+
+RUN add-apt-repository ppa:spotify-jyrki/dh-virtualenv && \
+    apt-get -q update && \
+    apt-get -q install -y dh-virtualenv

@@ -9,6 +9,8 @@ cd dhvirtualenv-docker-trusty
 # build image using this repo Dockerfile
 docker build -t dhvirtualenv .
 # use dhvirtualenv image to build debian package
+# the assumption is that your repo contains `debian` directory
 cd /path/to/your/repo/containing/python/code/to/build/repo_name
-docker run -d -v $(cd .. && pwd):/data dhvirtualenv /bin/bash -c "cd /data/repo_name; dpkg-buildpackage -us -uc"
+parent_dir=$(cd .. && pwd)
+docker run -d -v $parent_dir:$parent_dir dhvirtualenv /bin/bash -c "cd $parent_dir/repo_name; dpkg-buildpackage -us -uc"
 ```
