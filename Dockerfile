@@ -1,11 +1,13 @@
 FROM ubuntu:trusty
 
+# Usage: docker run -it -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_USER_NAME=$USER  -v $SRC:$SRC  sauce-cloud-deb-build-trusty:0.1  "cd $SRC/cloud; dpkg-buildpackage -uc -us"
 # apt dependencies (including python and dh-virtualenv)
 RUN apt-get update && apt-get install -y --no-install-recommends \
         tcl \
         tk \
         curl \
         git \
+        fakeroot \
         ca-certificates \
         openssh-client \
         software-properties-common \
@@ -33,3 +35,8 @@ RUN pip install --no-cache-dir \
 RUN add-apt-repository ppa:spotify-jyrki/dh-virtualenv && \
     apt-get -q update && \
     apt-get -q install -y dh-virtualenv
+
+# entrypoint.sh script will make sure that current user is created within container
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+

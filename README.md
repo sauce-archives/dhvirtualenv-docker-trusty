@@ -12,5 +12,6 @@ docker build -t dhvirtualenv .
 # the assumption is that your repo contains `debian` directory
 cd /path/to/your/repo/containing/python/code/to/build/repo_name
 parent_dir=$(cd .. && pwd)
-docker run -d -v $parent_dir:$parent_dir dhvirtualenv /bin/bash -c "cd $parent_dir/repo_name; dpkg-buildpackage -us -uc"
+# set LOCAL_USER to make sure that generated deb package is owned by the current user
+export SRC_DIR=$(cd .. && pwd) && docker run -it -e LOCAL_USER_ID=`id -u $USER` -e LOCAL_USER_NAME=$USER  -v $SRC_DIR:$SRC_DIR  dhvirtualenv "cd $SRC_DIR/repo_name; dpkg-buildpackage -us -uc"
 ```
